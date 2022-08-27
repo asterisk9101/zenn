@@ -67,10 +67,29 @@ podman run -d --name $CONTAINER_NAME --log-driver journald \
 podman logs -f ipa
 ```
 
-# 自動起動の設定
-
-podman はデーモンが居ないので、systemd にコントロールして貰うためにユニットファイルを作成します。
+稼働確認する。
 
 ```bash
 podman exec -it ipa bash
 ```
+
+```bash
+# ログイン直後はチケットが無い
+klist
+
+# チケットの入手
+kinit admin
+
+# チケットが表示される
+klist
+```
+
+## 自動起動の設定
+
+podman はデーモンが居ないので、systemd にコントロールして貰うためにユニットファイルを作成します。
+
+```bash
+
+```
+
+## バックアップ・リストア
