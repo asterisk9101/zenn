@@ -2,8 +2,8 @@
 title: "Fedora36 検証サーバでFreeIPAを使えるようにするときのメモ"
 emoji: "🙌"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [Linux, Fedora36]
-published: false
+topics: [Linux, Fedora36, FreeIPA, memo]
+published: true
 ---
 
 お家の検証サーバ用の備忘録です。基本 root です。
@@ -95,7 +95,10 @@ podman はデーモンが居ないので、systemd にコントロールして�
 
 ```bash
 podman generate systemd --name ipa > /etc/systemd/system/ipa.service
-podman stop ipa # 停止に時間がかかる場合があるので -t 20 などにする方が安全かもしれない（ユニットファイルも同様に編集しておくと良いかも）
+podman stop -t 20 ipa
+
+# ipa.service ファイルの ExceStop も同様に -t 20 に変更する
+nano /etc/systemd/system/ipa.service
 ```
 
 ```bash
