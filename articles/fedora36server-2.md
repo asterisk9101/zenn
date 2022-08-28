@@ -94,7 +94,14 @@ klist
 podman はデーモンが居ないので、systemd にコントロールして貰うためにユニットファイルを作成します。
 
 ```bash
-
+podman generate systemd --name ipa > /etc/systemd/system/ipa.service
+podman stop ipa # 停止に時間がかかる場合があるので -t 20 などにする方が安全かもしれない（ユニットファイルも同様に編集しておくと良いかも）
 ```
 
-## バックアップ・リストア
+```bash
+systemctl status ipa
+systemctl enable ipa
+reboot
+```
+
+以上
