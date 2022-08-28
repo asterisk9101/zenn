@@ -35,7 +35,8 @@ getsebool container_manage_cgroup
 freeipa 用の定義があるので利用する（freeipa-ldap や freeipa-replication は deprecated だそうです）
 
 ```bash
-firewall-cmd --add-service={freeipa-4,dns,ntp}
+firewall-cmd --add-service={freeipa-4,dns,ntp} --permanent
+firewall-cmd --reload
 ```
 
 ## データ用ディレクトリの作成
