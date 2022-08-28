@@ -33,7 +33,17 @@ systemctl restart NetworkManager
 検証するとき前提になりやすいものやツール類をインストールします。
 
 ```bash
-dnf -y update && dnf -y install git source-highlight jq nano tmux bat fd-find htop podman
+dnf -y update && \
+dnf -y install \
+    git \
+    source-highlight \
+    jq \
+    nano \
+    tmux \
+    bat \
+    fd-find \
+    htop \
+    podman
 ```
 
 ツールをインストールしたら、ツールの設定を追加します。グローバル設定なのは自分しか使わないからです。本番環境ではやっちゃ駄目。
