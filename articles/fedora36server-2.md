@@ -30,6 +30,14 @@ setsebool -P container_manage_cgroup 1
 getsebool container_manage_cgroup
 ```
 
+## Firewalld の設定
+
+freeipa 用の定義があるので利用する（freeipa-ldap や freeipa-replication は deprecated だそうです）
+
+```bash
+firewall-cmd --add-service={freeipa-4,dns,ntp}
+```
+
 ## データ用ディレクトリの作成
 
 データを格納するディレクトリを作成します。
@@ -105,6 +113,9 @@ nano /etc/systemd/system/ipa.service
 systemctl status ipa
 systemctl enable ipa
 reboot
+
+# 起動確認
+systemctl status ipa
 ```
 
 以上
