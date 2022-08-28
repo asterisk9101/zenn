@@ -44,6 +44,7 @@ FreeIPA-server を実行します(IPアドレスはサーバ自身の IP を指�
 
 ```bash
 CONTAINER_NAME=ipa
+ADMINPASS=P@ssw0rd
 IPA=192.168.1.21
 DOMAIN=localdomain.intra
 podman run -d --name $CONTAINER_NAME --log-driver journald \
@@ -54,7 +55,7 @@ podman run -d --name $CONTAINER_NAME --log-driver journald \
     -e IPA_SERVER_IP=$IPA \
     -p 636:636 -p 80:80 -p 123:123 -p 389:389 -p 443:443 -p 88:88 -p 464:464 -p 53:53 \
     freeipa/freeipa-server:fedora-35 ipa-server-install \
-    -a P@ssw0rd -p P@ssw0rd \
+    -a $ADMINPASS -p $ADMINPASS \
     --setup-dns --no-forwarders \
     -r $DOMAIN \
     --no-ntp \
@@ -67,11 +68,15 @@ podman run -d --name $CONTAINER_NAME --log-driver journald \
 podman logs -f ipa
 ```
 
-稼働確認する。
+## 稼働確認
+
+実際に FreeIPA が稼働しているか確認するために、コンテナに入って Kerberos チケットが発行されることを確認します。
 
 ```bash
 podman exec -it ipa bash
 ```
+
+コンテナの中の操作です（抜けるには exit）
 
 ```bash
 # ログイン直後はチケットが無い

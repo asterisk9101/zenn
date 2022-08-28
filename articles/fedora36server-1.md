@@ -17,7 +17,7 @@ lvextend -l +100%FREE /dev/fedora_fedora/root
 xfs_growfs /dev/fedora_fedora/root
 ```
 
-## systemd-resolved を無効にする
+## systemd-resolved の無効化
 
 なぜか NetworkManager と systemd-resolved が `/etc/resolv.conf` を取り合って通信を阻害することがあるので、systemd-resolved を無効にします。
 
@@ -28,7 +28,7 @@ rm /etc/resolv.conf
 systemctl restart NetworkManager
 ```
 
-## よく使うツール類をインストールしておきます
+## よく使うツール類のインストール
 
 検証するとき前提になりやすいものやツール類をインストールします。
 
