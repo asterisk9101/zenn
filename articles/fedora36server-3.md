@@ -1,5 +1,5 @@
 ---
-title: "FedoraサーバーでKubernetesを使えるようにするときのメモ"
+title: "Fedora36 検証サーバーでKubernetesを使えるようにするときのメモ"
 emoji: "🦔"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Linux, Fedora36, asnible, kubernetes]
