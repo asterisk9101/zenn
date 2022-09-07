@@ -8,10 +8,6 @@ published: true
 
 お家の検証サーバ用の備忘録です。基本 root です。
 
-## 前提の確認
-
-`Podman` を使います。`dnf install podman` でインストールしておきます。
-
 ## 参考資料
 
 <https://hub.docker.com/_/postgres/>
