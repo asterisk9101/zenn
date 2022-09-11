@@ -98,6 +98,12 @@ kinit admin
 klist
 ```
 
+ついでにデフォルトのログインシェルを `bash` に変更しておきます。
+
+```bash
+ipa config-mod --defaultshell=/bin/bash
+```
+
 ## 自動起動の設定
 
 podman はデーモンが居ないので、systemd にコントロールして貰うためにユニットファイルを作成します。
