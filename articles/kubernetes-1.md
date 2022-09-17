@@ -231,13 +231,13 @@ kubectl get secret awx-demo-admin-password -ojson | jq '.data.password' -r | bas
 kubectl describe pod/awx-demo....
 ```
 
-次に、Pod の標準出力を確認します。`-c` でコンテナを指定します。ブラウザでアクセスできない原因（DB接続に失敗しているなど）の調査ができます。
+次に、Pod の標準出力を確認します。`-c` でコンテナを指定する必要があります。ブラウザでアクセスできない原因（DB接続に失敗しているなど）の調査ができます。
 
 ```bash
 kubectl logs -f awx-demo... -c awx-demo-web
 ```
 
-それでも駄目なら、Pod にログインします。設定値が想定通りに設定されているか（ダブルクォートが抜けてエラーになっていたり）などの調査ができます。尚、AWX の設定ファイルは `/etc/tower/settings.py` にあります。
+それでも駄目なら、Pod にログインします。設定値が想定通りに設定されているか（設定値のダブルクォートが抜けてエラーになっていたり）などの調査ができます。尚、awx-operator が設定を挿入するファイルは `/etc/tower/settings.py` にあります。
 
 ```bash
 kubectl exec -it awx-demo... -c awx-demo-web -- bash
