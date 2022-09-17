@@ -20,8 +20,8 @@ function Get-JpQuarter {
     $JpYear = $Date.Year
     $Q = [Math]::Floor(($Date.Month - 1) / 3)
     
-    # 3ヶ月先～9ヶ月前までの月を列挙して同じQになるDateTimeだけをフィルタしている
-    $Months = -2..9 `
+    # 3ヶ月先～3ヶ月前までの月を列挙して同じQになるDateTimeだけをフィルタしている
+    $Months = -2..3 `
         | foreach-object { $Date.AddMonths($_) } `
         | where-object { [Math]::Floor(($_.Month - 1) / 3) -eq $Q } `
         | foreach-object { [datetime]$_.ToString("yyyy/MM/01") } 
