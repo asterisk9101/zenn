@@ -13,7 +13,13 @@ published: true
 インストール直後はファイルシステムに割り当てられている容量が少ないので拡張しておきます。
 
 ```bash
+# LV 名の確認
+lvdisplay
+
+# LV の拡張
 lvextend -l +100%FREE /dev/fedora_fedora/root
+
+# ファイルシステムの拡張
 xfs_growfs /dev/fedora_fedora/root
 ```
 
