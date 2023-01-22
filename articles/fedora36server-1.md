@@ -13,14 +13,13 @@ published: true
 インストール直後はファイルシステムに割り当てられている容量が少ないので拡張しておきます。
 
 ```bash
-# LV 名の確認
-lvdisplay
+LVPath=$(lvdisplay -c | awk -F: '{print $1}')
 
 # LV の拡張
-lvextend -l +100%FREE /dev/fedora_fedora/root
+lvextend -l +100%FREE $LVPath
 
 # ファイルシステムの拡張
-xfs_growfs /dev/fedora_fedora/root
+xfs_growfs $LVPath
 ```
 
 ## systemd-resolved の無効化
@@ -69,6 +68,12 @@ echo "set autoindent" >> /etc/nanorc
 
 # docker
 echo "alias docker=podman" >> /etc/bashrc
+```
+
+インストールと初期設定が終わったら再起動（もしくは停止してバックアップ）します。
+
+```bash
+reboot
 ```
 
 以上。
