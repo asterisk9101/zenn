@@ -57,12 +57,12 @@ ADMINPASS=P@ssw0rd
 IPA=192.168.1.21
 DOMAIN=localdomain.intra
 podman run -d --name $CONTAINER_NAME --log-driver journald \
-    -h ipa.$DOMAIN \
+    -h $CONTAINER_NAME.$DOMAIN \
     --read-only \
     --dns=127.0.0.1 \
     -v /var/lib/ipa-data:/data:Z \
     -e IPA_SERVER_IP=$IPA \
-    -p 636:636 -p 80:80 -p 123:123 -p 389:389 -p 443:443 -p 88:88 -p 464:464 -p 53:53 \
+    -p 636:636 -p 80:80 -p 123:123 -p 389:389 -p 443:443 -p 88:88 -p 464:464 -p 53:53 -p 53:53/udp \
     freeipa/freeipa-server:fedora-35 ipa-server-install \
     -a $ADMINPASS -p $ADMINPASS \
     --setup-dns --no-forwarders \
