@@ -125,4 +125,22 @@ reboot
 systemctl status ipa
 ```
 
+## 管理画面のポップアップを抑止する
+
+FreeIPAの管理画面（Webコンソール）へアクセスしたとき、認証を要求するポップアップが表示されますが、端末が正しく設定されていないとこの認証は2回失敗します。
+
+何が起きているのかは以下のブログに記載があります。
+
+<http://jdshewey.blogspot.com/2017/08/fixing-annoying-popup-in-freeipa.html>
+
+ブログの解説に従って、`/etc/httpd/conf.d/ipa-rewrite.conf` に、以下の設定を追記することでポップアップを抑止します。
+
+```conf
+#The following disables the annoying kerberos popup for Chrome
+RewriteCond %{HTTP_COOKIE} !ipa_session
+RewriteCond %{HTTP_REFERER} ^(.+)/ipa/ui/$
+RewriteRule ^/ipa/session/json$ - [R=401,L]
+RedirectMatch 401 ^/ipa/session/login_kerberos
+```
+
 以上
