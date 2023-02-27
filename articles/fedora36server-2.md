@@ -110,6 +110,10 @@ podman はデーモンが居ないので、systemd にコントロールして�
 
 ```bash
 podman generate systemd --name ipa > /etc/systemd/system/ipa.service
+
+# 念のためリロードする
+systemctl daemon-reload
+
 podman stop -t 20 ipa
 
 # ipa.service ファイルの ExceStop も同様に -t 20 に変更する
