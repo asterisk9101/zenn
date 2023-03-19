@@ -48,7 +48,8 @@ dnf -y install \
     bat \
     fd-find \
     htop \
-    podman
+    podman \
+    shellcheck
 ```
 
 ツールをインストールしたら、ツールの設定を追加します。グローバル設定なのは自分しか使わないからです。本番環境ではやっちゃ駄目。
