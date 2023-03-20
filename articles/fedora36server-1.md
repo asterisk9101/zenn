@@ -66,6 +66,8 @@ echo "bind-key C-q send-prefix" >> /etc/tmux.conf
 
 # nano
 echo "set autoindent" >> /etc/nanorc
+echo "set tabsize 2" >> /etc/nanorc
+echo "set tabstospaces" >> /etc/nanorc
 
 # docker
 echo "alias docker=podman" >> /etc/bashrc
