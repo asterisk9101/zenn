@@ -29,7 +29,7 @@ xfs_growfs $LVPath
 ```bash
 systemctl stop systemd-resolved
 systemctl disable systemd-resolved
-rm /etc/resolv.conf
+rm -f /etc/resolv.conf
 systemctl restart NetworkManager
 ```
 
