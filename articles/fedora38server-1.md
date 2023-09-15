@@ -68,4 +68,6 @@ nmcli con mod ens18 ipv4.method manual
 reboot
 ```
 
+Free IPA の設定は別途行います。
+
 以上
