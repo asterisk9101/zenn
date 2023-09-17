@@ -40,6 +40,6 @@ FreeIPA サーバの DNS エントリを手動で削除します。
 
 ## 次
 
-<https://zenn.dev/asterisk9101/articles/fedora38server-4>
+[FreeIPAレプリカにするとき](https://zenn.dev/asterisk9101/articles/fedora38server-4)
 
 以上

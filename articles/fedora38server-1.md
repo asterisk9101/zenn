@@ -102,5 +102,5 @@ echo $IP $HOSTNAME $ALIAS >> /etc/hosts
 
 ## 次
 
-<https://zenn.dev/asterisk9101/articles/fedora38server-2>
-<https://zenn.dev/asterisk9101/articles/fedora38server-3>
+[FreeIPAサーバにするとき](https://zenn.dev/asterisk9101/articles/fedora38server-2)
+[FreeIPAクライアントにするとき](https://zenn.dev/asterisk9101/articles/fedora38server-3)
