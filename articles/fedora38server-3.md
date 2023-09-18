@@ -21,11 +21,21 @@ nmcli con mod ens18 ipv4.dns 192.168.1.30
 systemctl restart NetworkManager
 
 DOMAIN=$(hostname -d)
-IPA=31-fedora38.$DOMAIN
+IPA=30-fedora38.$DOMAIN
 ID=admin
 PW=P@ssw0rd
 ipa-client-install --server=$IPA --domain $DOMAIN -p $ID -w $PW --mkhomedir -U
-# ipa-client-install --server=$IPA --domain $DOMAIN -p $ID -w $PW --mkhomedir --force-join -U
+```
+
+## DNSの設定
+
+FreeIPA サーバが複数ある場合は DNS の設定を更新します。
+
+```bash
+DNS1=192.168.1.30
+DNS2=192.168.1.31
+nmcli con mod ens18 ipv4.dns $DNS1,$DNS2
+systemctl restart NetworkManager
 ```
 
 ## FreeIPA ドメインから離脱

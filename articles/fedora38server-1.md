@@ -93,11 +93,7 @@ reboot
 自分自身の名前解決をできるようにしておきます。
 
 ```bash
-IP=$(hostname -I)
-DOMAIN=$(hostname -d)
-ALIAS=${HOSTNAME/.${DOMAIN}/}
-
-echo $IP $HOSTNAME $ALIAS >> /etc/hosts
+echo $(hostname -I) $(hostname -A) $(hostname -s) >> /etc/hosts
 ```
 
 ## 次
