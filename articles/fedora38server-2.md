@@ -69,4 +69,34 @@ systemctl restart ipa
 ipactl status
 ```
 
+## DNA範囲の設定
+
+ユーザーを追加するに当たって、DNA(distributed numeric assignment)範囲というものを設定します。ローカルの uid と重複しないようにします。
+
+```bash
+# ローカルの確認
+cat /etc/passwd | column -s: -t | sort -nk3,3
+
+# FreeIPA 上のユーザの確認
+ipa user-find --raw --all admin
+```
+
+ローカルの最大値が 65534 で、FreeIPA の admin が 920200000 だったので、以下の通り設定。
+
+```bash
+ipa-replica-manage dnarange-set 30-fedora38.localdomain.intra 920200001-920299999
+```
+
+現在の DNA 範囲を確認するには、以下のコマンドを使う。
+
+```bash
+ipa-replica-manage dnarange-show
+```
+
+## ユーザーの追加
+
+```bash
+ipa user-add --first test --last user --password
+```
+
 以上
