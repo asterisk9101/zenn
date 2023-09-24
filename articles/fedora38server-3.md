@@ -27,6 +27,17 @@ PW=P@ssw0rd
 ipa-client-install --server=$IPA --domain $DOMAIN -p $ID -w $PW --mkhomedir -U
 ```
 
+### FreeIPA ドメインへの参加に失敗するとき
+
+検証サーバは潰して立ててを繰り返すものなので、潰したサーバの情報がドメインに残っているのかも知れません。
+
+ドメインコントローラにて、以下のコマンドで昔の情報を削除してから、クライアント側で `ipa-client-install` を再実行します。
+
+```bash
+kinit admin
+ipa host-del <FQDN> --updatedns
+```
+
 ## DNSの設定
 
 FreeIPA サーバが複数ある場合は DNS の設定を更新します。
