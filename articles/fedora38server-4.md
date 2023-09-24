@@ -40,6 +40,14 @@ nmcli con mod ens18 ipv4.dns 192.168.1.30,192.168.1.31
 systemctl restart NetworkManager
 ```
 
+## 手動レプリケーション
+
+通常はリアルタイムもしくは一定期間毎にレプリケーションが実行されるが、手動でレプリケーションを実行したい場合は以下のコマンドを使います。
+
+```bash
+ipa-replica-manage force-sync --from 30-fedora38.localdomain.intra
+```
+
 ## FreeIPA ドメインの離脱
 
 以下のコマンドで FreeIPA クライアント機能も削除されます。
