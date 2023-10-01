@@ -33,11 +33,11 @@ root は無効のままとし、wheel グループのユーザーを作成しま
 
 ## アップデートとバックアップの作成
 
-ローカルコンソールにてアップデートを実行します。ついでに `dnf-utils` を入れておきます。
+ローカルコンソールにてアップデートを実行します。ついでに `dnf-utils` と `rsyslog-logrotate` を入れておきます。
 
 ```bash
 dnf -y update
-dnf -y install dnf-utils
+dnf -y install dnf-utils rsyslog-logrotate
 poweroff
 ```
 
