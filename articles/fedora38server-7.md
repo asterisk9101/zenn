@@ -383,7 +383,7 @@ ls -l /etc/pki/ca-trust/extracted/pem/
 
 ## update-ca-trust コマンド
 
-証明書のインストール方法として、手動で証明書を配置する方法があると説明されています。
+証明書のインストール方法として、`source/anchors` ディレクトリに[手動で証明書を配置する方法](https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/system_design_guide/adding-new-certificates_using-shared-system-certificates)があると説明されています。
 
 ```bash
 cp -p server.crt /etc/pki/ca-trust/source/anchors/
