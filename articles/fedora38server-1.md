@@ -82,7 +82,8 @@ nmcli con mod ens18 ipv4.gateway $GW
 nmcli con mod ens18 ipv4.dns $DNS
 nmcli con mod ens18 ipv4.method manual
 
-Name=$(echo $IP | sed 's/.*\.//')-fedora38
+VERSION_ID=$(cat /etc/os-release | awk -F= '/VERSION_ID/{print $2}')
+Name=$(echo $IP | sed 's/.*\.//')-fedora$VERSION_ID
 Domain=localdomain.intra
 hostnamectl hostname $Name.$Domain
 
