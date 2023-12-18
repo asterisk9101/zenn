@@ -48,4 +48,33 @@ CREATE USER 'wikiuser'@'localhost' IDENTIFIED BY 'database_password';
 GRANT ALL PRIVILEGES ON my_wiki.* TO 'wikiuser'@'localhost' WITH GRANT OPTION;
 ```
 
-images を含むディレクトリは php-fpm にプロキシしない設定が必要だけど方法が分からなかった
+images を含むディレクトリは php-fpm にプロキシしない設定が必要だけど方法が分からなかった。
+
+---
+
+## docker を使う方法
+
+```bash
+dnf install -y docker
+systemctl enable --now docker
+```
+
+```bash
+docker volume create images
+docker volume create db
+docker network create mediawiki
+docker run -d --restart unless-stopped --network mediawiki --name db -v db:/var/lib/mysql -e MYSQL_DATABASE=my_wiki -e MYSQL_USER=wikiuser -e MYSQL_PASSWORD=P@ssw0rd123 -e MYSQL_RANDOM_ROOT_PASSWORD=yes mariadb
+docker run -d --restart unless-stopped --network mediawiki --name mediawiki -v images:/var/www/html/images -v /root/LocalSettings.php:/var/www/html/LocalSettings.php -p 80:80 mediawiki
+```
+
+```bash
+docker run -it mediawiki bash
+
+# バックアップ
+/var/www/html/maintenance/run dumpBackup.php --full --output=gzip:/tmp/wiki.xml.gz
+
+# リストア
+/var/www/html//maintenance/run importDump.php < /tmp/wiki.xml.gz
+```
+
+images がバックアップされているのか不明
