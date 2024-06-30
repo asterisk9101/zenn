@@ -3,7 +3,7 @@ title: "Fedora40 検証サーバを作るときに最初にやること"
 emoji: "💭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Linux, Fedora40, memo]
-published: false
+published: true
 ---
 
 お家の検証サーバ用の備忘録です。基本 root です。
@@ -60,6 +60,9 @@ FreeIPA ドメインに参加する場合は FQDN 形式で設定する必要が
 
 ```bash
 read -p 'IP Address?> ' IP
+```
+
+```bash
 read -p 'Domain?> ' Domain
 ```
 
