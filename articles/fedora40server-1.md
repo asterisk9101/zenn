@@ -67,13 +67,14 @@ sudo su -
 `wheel` グループのユーザはパスワード無しで `sudo` できるように設定します。
 
 ```bash
-echo '%wheel ALL=(ALL) NOPASSWD:ALL' > /etc/sudores.d/wheel
+echo '%wheel ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/wheel
 ```
 
 必要に応じてパスワード認証を無効化する。
 
 ```bash
-echo 'PasswordAuthentication no' >> /etc/sshd_config
+echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config
+systemctl restart sshd
 ```
 
 ## ファイルシステムの拡張
