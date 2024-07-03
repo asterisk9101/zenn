@@ -31,7 +31,7 @@ createdb zabbix -O zabbix
 exit
 ```
 
-Zabbix Web サービスから接続すｒために、認証方式を peer から md5 に変更し、変更を反映するためにサービスを再起動します。
+Zabbix Web サービスから接続するために、認証方式を peer から md5 に変更し、変更を反映するためにサービスを再起動します。
 
 ```bash
 sed -i.bak -E \
@@ -89,12 +89,6 @@ psql -U zabbix zabbix < images.sql
 psql -U zabbix zabbix < data.sql
 ```
 
-Zabbix の自動起動の設定を行います。なぜか `systemctl enable` できなかったので、手動で `ln` しています。
-
-```bash
-ln -s /usr/lib/systemd/system/zabbix-server.service /etc/systemd/system/multi-user.target.wants/zabbix-server.service
-```
-
 `setup.php` を実行するのが面倒なので、手動でコンフィグファイルを作ります。状況に応じて適宜変更してください。
 
 ```bash
@@ -124,17 +118,27 @@ EOF
 chown apache:apache /etc/zabbix/web/zabbix.conf.php
 ```
 
+Zabbix の自動起動の設定を行います。なぜか `systemctl enable` できなかったので、手動で `ln` しています。
+
+```bash
+ln -s /usr/lib/systemd/system/zabbix-server.service /etc/systemd/system/multi-user.target.wants/zabbix-server.service
+```
+
 各種設定が終わったらサービスを起動します。
 
 ```bash
 systemctl start zabbix-server
 ```
 
+## 接続テスト
+
 以下の URL で接続できます。初期ログインは `Admin` で、パスワードは `zabbix` です。
 
 ```bash
 http://localhost/zabbix/
 ```
+
+## 参考
 
 構築時の参考になりそうなログです。
 
