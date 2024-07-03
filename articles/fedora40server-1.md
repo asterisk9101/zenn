@@ -42,6 +42,40 @@ poweroff
 
 この時点で Proxmox でバックアップを取得しておき、ベースイメージとします。
 
+## 公開鍵認証の設定
+
+初回ログイン時はパスワードでログインして公開鍵を登録します。
+
+```bash
+mkdir -m 700 .ssh
+# 入力待ちになるので、公開鍵を貼り付けて Ctrl+D する
+cat > .ssh/authorized_keys
+```
+
+```bash
+chmod 600 .ssh/authorized_keys
+```
+
+## sudo のパスワード省略設定
+
+root になるときも初回はパスワード入力します。
+
+```bash
+sudo su -
+```
+
+`wheel` グループのユーザはパスワード無しで `sudo` できるように設定します。
+
+```bash
+echo '%wheel ALL=(ALL) NOPASSWD:ALL' > /etc/sudores.d/wheel
+```
+
+必要に応じてパスワード認証を無効化する。
+
+```bash
+echo 'PasswordAuthentication no' >> /etc/sshd_config
+```
+
 ## ファイルシステムの拡張
 
 インストール直後はファイルシステムに割り当てられている容量が少ないので拡張しておきます。
