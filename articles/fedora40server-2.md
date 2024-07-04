@@ -26,7 +26,14 @@ systemctl enable --now postgresql
 
 ```bash
 su - postgres
+
+# 初期パスワードの入力を求められる
 createuser zabbix -P
+```
+
+`Zabbix` 用のデータベースを作って、`zabbix` ユーザをオーナーに設定します。`postgres` ユーザーからはログアウトします。
+
+```bash
 createdb zabbix -O zabbix
 exit
 ```
@@ -50,7 +57,7 @@ IPv6 は邪魔になるらしいので無効化します。`ens18` の部分は�
 nmcli con show
 nmcli con show ens18 | grep ipv6
 nmcli con modify ens18 ipv6.method "disabled"
-nmcli connection up ens18
+nmcli con up ens18
 sed -i.bak -e '/^::/s/^/#/' /etc/hosts
 ```
 
@@ -99,7 +106,7 @@ cat << EOF > /etc/zabbix/web/zabbix.conf.php
 \$DB['PORT'] = '0';
 \$DB['DATABASE'] = 'zabbix';
 \$DB['USER'] = 'zabbix';
-\$DB['PASSWORD'] = 'zabbix';
+\$DB['PASSWORD'] = 'Password';
 \$DB['SCHEMA'] = '';
 \$DB['ENCRYPTION'] = false;
 \$DB['KEY_FILE'] = '';
