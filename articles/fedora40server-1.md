@@ -77,6 +77,17 @@ echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config
 systemctl restart sshd
 ```
 
+## systemd-resolved の停止
+
+NetworkManager で管理しますので、systemd-resolved は停止します。
+
+```bash
+systemctl stop systemd-resolved
+systemctl disable systemd-resolved
+rm -f /etc/resolv.conf
+systemctl restart NetworkManager
+```
+
 ## ファイルシステムの拡張
 
 インストール直後はファイルシステムに割り当てられている容量が少ないので拡張しておきます。
