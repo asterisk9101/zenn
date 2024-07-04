@@ -18,7 +18,7 @@ Proxmox 上の仮想サーバとして構築します。
 
 ## OSインストール設定
 
-言語は**英語(English(United States))**を選択します。日本語だと FreeIPA サーバ(pki-tomcatd)のインストールが失敗したので。
+言語は **英語(English(United States))** を選択します。日本語だと FreeIPA サーバ(pki-tomcatd)のインストールが失敗したので。
 
 LOCALIZATION は、日本語キーボードと日本語サポートを選択しておきます。Time & Date は自動的に Asia/Tokyo に設定されるはずです。
 
