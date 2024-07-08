@@ -12,6 +12,17 @@ published: true
 
 <https://zenn.dev/asterisk9101/articles/fedora40server-1>
 
+## SELinuxの無効化
+
+良くないなぁと思いながら無効化します。
+
+```bash
+sed -i.bak -E \
+    's/SELINUX=enforcing/SELINUX=disabled/' \
+    /etc/selinux/config
+reboot
+```
+
 ## PostgreSQL のインストール
 
 RDBMS は `postgresql` を使います。インストールできたら、`initdb` してデータベースクラスタを作ります。後続の作業をするためにサービスを起動しておきます。
@@ -22,20 +33,17 @@ postgresql-setup --initdb
 systemctl enable --now postgresql
 ```
 
-`postgres` ユーザーが作成されるのでスイッチして、`zabbix` ユーザーとデータベースを作ります。
+`postgres` ユーザーが作成されるので `sudo` して、`zabbix` ユーザーを作ります。
 
 ```bash
-su - postgres
-
 # 初期パスワードの入力を求められる
-createuser zabbix -P
+sudo -u postgres createuser zabbix -P
 ```
 
-`Zabbix` 用のデータベースを作って、`zabbix` ユーザをオーナーに設定します。`postgres` ユーザーからはログアウトします。
+`zabbix` ユーザをオーナーに設定した `Zabbix` 用のデータベースを作ります。
 
 ```bash
-createdb zabbix -O zabbix
-exit
+sudo -u postgres createdb zabbix -O zabbix
 ```
 
 Zabbix Web サービスから接続するために、認証方式を peer から md5 に変更し、変更を反映するためにサービスを再起動します。
@@ -73,12 +81,6 @@ firewall-cmd --add-service=http
 firewall-cmd --runtime-to-permanent
 ```
 
-Zabbix ウェブアプリケーションが DB にアクセスできるように、SELinux ポリシーを変更します。
-
-```bash
-setsebool -P httpd_can_network_connect_db=1
-```
-
 ## Zabbix サーバのインストール
 
 Fedora 40 では以下のパッケージが提供されていますので、まとめてインストールします。
@@ -95,18 +97,15 @@ read -s -p 'db password?> ' DBPASSWORD
 
 ```bash
 export PGPASSWORD=$DBPASSWORD
-cd /usr/share/zabbix-postgresql
-psql -U zabbix zabbix < schema.sql
-psql -U zabbix zabbix < images.sql
-psql -U zabbix zabbix < data.sql
-# ホームディレクトリに戻る
-cd
+psql -U zabbix zabbix < /usr/share/zabbix-postgresql/schema.sql
+psql -U zabbix zabbix < /usr/share/zabbix-postgresql/images.sql
+psql -U zabbix zabbix < /usr/share/zabbix-postgresql/data.sql
 ```
 
 Zabbix サーバから DB へ接続できるようにパスワードを設定します。
 
 ```bash
-echo 'DBPassword=zabbix' >> /etc/zabbix_server.conf
+echo 'DBPassword='$DBPASSWORD >> /etc/zabbix_server.conf
 ```
 
 `setup.php` を実行するのが面倒なので、手動でコンフィグファイルを作ります。状況に応じて適宜変更してください。
@@ -119,7 +118,7 @@ cat << EOF > /etc/zabbix/web/zabbix.conf.php
 \$DB['PORT'] = '0';
 \$DB['DATABASE'] = 'zabbix';
 \$DB['USER'] = 'zabbix';
-\$DB['PASSWORD'] = 'zabbix';
+\$DB['PASSWORD'] = '$DBPASSWORD';
 \$DB['SCHEMA'] = '';
 \$DB['ENCRYPTION'] = false;
 \$DB['KEY_FILE'] = '';
@@ -145,17 +144,11 @@ Zabbix の自動起動の設定を行います。なぜか `systemctl enable` �
 ln -s /usr/lib/systemd/system/zabbix-server.service /etc/systemd/system/multi-user.target.wants/zabbix-server.service
 ```
 
-`php-fpm` から `zabbix-server` に接続するための許可ポリシーを有効にします。
+エージェントからの通信を受けつけるためのポートを開放します。
 
 ```bash
-setsebool -P httpd_can_connect_zabbix 1
-```
-
-`zabbix-server` から `/var/kerberos/krb5` にアクセスできないとエラーログが残るので、SELinux ポリシーを作ってインストールします。
-
-```bash
-ausearch -c 'zabbix_server' --raw | audit2allow -M my-zabbixserver
-semodule -i my-zabbixserver.pp
+firewall-cmd --add-service=zabbix-server
+firewall-cmd --runtime-to-permanent
 ```
 
 各種設定が終わったらサービスを起動します。
@@ -173,12 +166,35 @@ systemctl start zabbix-server
 http://localhost/zabbix/
 ```
 
+## Zabbix Agent のインストール
+
+```bash
+dnf -y install zabbix-agent
+```
+
+`zabbix-agent` を `root` で稼動させるように設定します。`/var/log/messages` など `root` でないと参照できないログを監視する場合はやむを得ず。
+
+```bash
+sed -i.bak -E \
+    -e 's/# AllowRoot=0/AllowRoot=1/' \
+    /etc/zabbix_agentd.conf
+sed -i.bak -E \
+    -e '/User=zabbix/d' \
+    /usr/lib/systemd/system/zabbix-agent.service
+```
+
+`zabbix-agent` を起動します。
+
+```bash
+systemctl daemon-reload
+systemctl start zabbix-agent
+```
+
 ## 参考
 
 構築時の参考になりそうなログです。
 
 ```bash
-less /var/log/audit/audit.log
 less /var/log/zabbixsrv/zabbix_server.log
 ```
 
