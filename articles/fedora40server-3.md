@@ -27,13 +27,19 @@ reboot
 
 ## インストール
 
+`zabbix-agent` をインストールします。
+
 ```bash
 dnf -y install zabbix-agent
 ```
 
+`zabbix server` の IP アドレスを入力します。
+
 ```bash
 read -p "Zabbix Server IpAddress? " zbx
 ```
+
+`zabbix server` のアドレスを設定するとともに、 `zabbix-agent` を `root` で動かすようにします。`root` でしか参照できないログ(`/var/log/messages`など)を監視するためです。
 
 ```bash
 sed -i.bak -E \
@@ -44,12 +50,35 @@ sed -i.bak -E \
     /etc/zabbix_agentd.conf
 ```
 
-```bash
-firewall-cmd --add-service=zabbix-agent
-```
+`root` で動かすために `zabbix_agentd.conf` だけではなくて、`systemd` のユニットファイルも修正する必要があります。
 
 ```bash
 sed -i.bak -E -e '/User=zabbix/d' /usr/lib/systemd/system/zabbix-agent.service
 systemctl daemon-reload
+```
+
+`zabbix` の特徴として、サーバからエージェントにメトリクスを取りに行くプル型であるので、監視される側のファイアウォールを開ける必要があります。
+
+```bash
+firewall-cmd --add-service=zabbix-agent
+```
+
+`zabbix-agent` を起動します。
+
+```bash
 systemctl enable --now zabbix-agent
 ```
+
+## 監視設定の追加
+
+`zabbix server` の web コンソールにログインし、「設定」→「ホスト」→「ホストの作成」をクリックします。
+
+「ホスト名」と「テンプレート」、「グループ」を設定し、「追加」をクリックします。
+
+※「テンプレート」を設定しておかないと、サーバがメトリクスを取りに行かないので、いつまで経っても動いていないように見えます。
+
+## トラブルシューティング
+
+`zabbix server` 側で `zabbix_get` コマンドを使って、値が取得できるか確認します。
+
+<https://www.zabbix.com/documentation/6.4/jp/manual/concepts/get>
