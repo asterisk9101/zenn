@@ -44,12 +44,25 @@ poweroff
 
 ## 公開鍵認証の設定
 
-初回ログイン時はパスワードでログインして公開鍵を登録します。
+初回ログイン時はパスワードでログインし、以下のコマンドを実行します。※入力待ちになります
 
 ```bash
 mkdir -m 700 .ssh
 # 入力待ちになるので、公開鍵を貼り付けて Ctrl+D する
 cat > .ssh/authorized_keys
+```
+
+操作端末で以下のコマンドを実行します。
+
+```powershell
+Get-Content "$home\.ssh\id_ed25519.pub" | % { $_ + "`n" } | Set-Clipboard
+```
+
+入力待ちのコンソールに貼り付けて、`Ctrl+D` を押下します。※入力イメージです。
+
+```bash
+cat > .ssh/authorized_keys
+ssh-ed25519 xxxxxxxxxxxxxxxxxxxxxxx username@hostname
 ```
 
 ```bash
