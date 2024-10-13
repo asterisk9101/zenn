@@ -63,9 +63,9 @@ dnf -y install certbot python3-certbot-nginx
 certbot certonly --nginx -d $DOMAIN -m $EMAIL --agree-tos -n
 ```
 
-## nginx の tls を有効化
+## nginx の TLS を有効化
 
-`nginx` の SSL を有効化します。
+`nginx` の TLS を有効化して、certbot で入手した証明書を参照するように設定します。
 
 ```bash
 FQDN="$SERVER_NAME.$DOMAIN"
