@@ -93,4 +93,18 @@ curl -k https://localhost
 # => <title>Test Page for the HTTP Server on Fedora</title>
 ```
 
+## 証明書の自動更新
+
+証明書を自動的に更新するよう設定します。
+
+```bash
+systemctl enable --now certbot-renew.timer
+# systemctl daemon-reload でも良いかも
+
+systemctl list-timers certbot-renew.timer
+
+cat /etc/sysconfig/certbot | grep POST_HOOK
+# => POST_HOOK="--post-hook 'systemctl restart nginx'"
+```
+
 以上
