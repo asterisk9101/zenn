@@ -16,11 +16,13 @@ published: true
 
 ## SELinux の許可
 
+これを許可しないと Permission Deny になる。
+
 ```bash
 setsebool -P httpd_can_network_connect on
 ```
 
-## nginx.conf の修正
+## FQDN の設定など
 
 ```bash
 read -p 'FQDN?>' FQDN
@@ -36,7 +38,7 @@ read -p 'PORT?>' PORT
 
 ## WebScoket 用の設定の追加
 
-今回、背後のサーバは `websocket` を使うので、設定を追加する。
+今回、後ろのサーバは `websocket` を使うので設定を追加する。
 
 ```bash
 cat << EOF > /etc/nginx/conf.d/websocket.conf
