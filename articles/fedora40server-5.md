@@ -26,7 +26,7 @@ firewall-cmd --reload
 
 ## nginx のインストール
 
-起動して動作確認をします。
+起動して動作確認をします。http で応答があればOK。
 
 ```bash
 dnf -y install nginx
@@ -83,13 +83,16 @@ sed -i.bak -r \
     /etc/nginx/nginx.conf
 ```
 
-`nginx.conf` の構文をチェックして問題無ければ、`nginx` を再起動します。
+`nginx.conf` の構文をチェックして問題無ければ、`nginx` を再起動します。https で応答することを確認します。
 
 ```bash
 nginx -t
+# => nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+# => nginx: configuration file /etc/nginx/nginx.conf test is successful
+
 systemctl restart nginx
 
-curl -k https://localhost
+curl -k https://localhost 2>&1 | grep '<title>'
 # => <title>Test Page for the HTTP Server on Fedora</title>
 ```
 
@@ -106,5 +109,9 @@ systemctl list-timers certbot-renew.timer
 cat /etc/sysconfig/certbot | grep POST_HOOK
 # => POST_HOOK="--post-hook 'systemctl restart nginx'"
 ```
+
+## 自宅サーバの DDNS 化
+
+<https://zenn.dev/asterisk9101/articles/cloudflare-1>
 
 以上
