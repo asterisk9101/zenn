@@ -65,20 +65,28 @@ certbot certonly --nginx -d $DOMAIN -m $EMAIL --agree-tos -n
 
 ## nginx の TLS を有効化
 
-`nginx` の TLS を有効化して、certbot で入手した証明書を参照するように設定します。
+`nginx` の設定ディレクトリに、certbot で入手した証明書を参照するように設定を入れます。
+
+```bash
+cat << EOF > /etc/nginx/default.d/tls.conf
+    ssl_certificate "/etc/letsencrypt/live/$DOMAIN/fullchain.pem";
+    ssl_certificate_key "/etc/letsencrypt/live/$DOMAIN/privkey.pem";
+    ssl_session_cache shared:SSL:1m;
+    ssl_session_timeout  10m;
+    ssl_ciphers PROFILE=SYSTEM;
+    ssl_prefer_server_ciphers on;
+EOF
+```
+
+`nginx.conf` の TLS の設定のコメントを外します。
 
 ```bash
 FQDN="$SERVER_NAME.$DOMAIN"
 RANGE1='Settings for a TLS enabled server'
 RANGE2='^}'
-REPLACEMENT1="_;"
-REPLACEMENT2="/etc/pki/nginx/server.crt"
-REPLACEMENT3="/etc/pki/nginx/private/server.key"
 sed -i.bak -r \
-    -e "/$RANGE1/,/$RANGE2/s@$REPLACEMENT1@$FQDN;@" \
-    -e "/$RANGE1/,/$RANGE2/s@$REPLACEMENT2@/etc/letsencrypt/live/$DOMAIN/fullchain.pem@" \
-    -e "/$RANGE1/,/$RANGE2/s@$REPLACEMENT3@/etc/letsencrypt/live/$DOMAIN/privkey.pem@" \
     -e "/$RANGE1/,/$RANGE2/s@^#@@" \
+    -e "/.*ssl_.*/d" \
     -e "/$RANGE1/d" \
     /etc/nginx/nginx.conf
 ```
