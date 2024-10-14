@@ -48,15 +48,15 @@ export CF_API_TOKEN
 /root/go/bin/flarectl --json dns list --zone ${ZONE} --type A | jq -r .[].ID
 ```
 
-レコードIDが一意であればシェルシェル変数に入れておきます。
+レコードIDが一意であればシェル変数に入れておきます。
 
 ```bash
 RECID=$(/root/go/bin/flarectl --json dns list --zone ${ZONE} --type A | jq -r .[].ID)
 ```
 
-## スクリプト作成
+## 更新スクリプト作成
 
-シェルスクリプトを作ります。
+グローバルIPが変わったらDNSレコードを更新するシェルスクリプトを作ります。
 
 ```bash
 cat << EOF > MyDDNS.sh
@@ -79,7 +79,7 @@ fi
 EOF
 ```
 
-ちゃんとできたか確認して実行権限を付与します。
+ちゃんとスクリプトができたか確認して実行権限を付与します。`GLOBAL_ADDRESS` は、IP アドレスを覚えておくためのファイルです。
 
 ```bash
 cat MyDDNS.sh
