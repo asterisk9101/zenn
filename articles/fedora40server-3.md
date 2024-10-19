@@ -60,7 +60,8 @@ systemctl daemon-reload
 `zabbix` の特徴として、サーバからエージェントにメトリクスを取りに行くプル型であるので、監視される側のファイアウォールを開ける必要があります。
 
 ```bash
-firewall-cmd --add-service=zabbix-agent
+firewall-cmd --add-service=zabbix-agent --permanent
+firewall-cmd --reload
 ```
 
 `zabbix-agent` を起動します。
@@ -73,7 +74,7 @@ systemctl enable --now zabbix-agent
 
 `zabbix server` の web コンソールにログインし、「設定」→「ホスト」→「ホストの作成」をクリックします。
 
-「ホスト名」と「テンプレート」、「グループ」を設定し、「追加」をクリックします。
+「ホスト名」と「テンプレート」、「グループ」および「インターフェース」を設定し、「追加」をクリックします。
 
 ※「テンプレート」を設定しておかないと、サーバがメトリクスを取りに行かないので、いつまで経っても動いていないように見えます。
 
