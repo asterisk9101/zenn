@@ -187,7 +187,7 @@ sed -i.bak -E \
 
 ```bash
 systemctl daemon-reload
-systemctl start zabbix-agent
+systemctl enable --now zabbix-agent
 ```
 
 ## 参考
