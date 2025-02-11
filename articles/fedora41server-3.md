@@ -62,7 +62,13 @@ su - postgres
 
 ```bash
 read -p 'User Name?> ' ID
+```
+
+```bash
 read -s -p 'Password?> ' PW
+```
+
+```bash
 psql -c "CREATE ROLE $ID LOGIN ENCRYPTED PASSWORD '$PW' VALID UNTIL 'infinity';"
 
 # 確認
@@ -73,6 +79,9 @@ psql -c "\du"
 
 ```bash
 read -p 'database name?> ' DB
+```
+
+```bash
 createdb $DB -O $ID
 
 # 確認
