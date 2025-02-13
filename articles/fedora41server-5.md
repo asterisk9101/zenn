@@ -82,4 +82,13 @@ bundle exec rails db:seed
 
 `Home#index` と記載されたページが表示されれば認証成功です。
 
+## メッセージの表示
+
+ログイン成功・失敗の際にメッセージを表示するには、`app/views/layouts/application.erb` に以下を追記します。
+
+```bash
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+```
+
 以上
