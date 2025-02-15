@@ -22,6 +22,7 @@ read -p "App Name?> " AppName
 
 ```bash
 psql -c "CREATE ROLE $AppName LOGIN ENCRYPTED PASSWORD '"$AppName"' VALID UNTIL 'infinity';"
+psql -c "ALTER ROLE $AppName CREATEDB;"
 
 # 開発環境のデータベースは docker などで開発端末のローカルに立てるべきです。
 # 今回は本番に近い検証がしたかったので、独立したデータベースを用意しています。
