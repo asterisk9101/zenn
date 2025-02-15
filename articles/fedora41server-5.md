@@ -84,7 +84,7 @@ bundle exec rails db:seed
 
 ## メッセージの表示
 
-ログイン成功・失敗の際にメッセージを表示するには、`app/views/layouts/application.erb` に以下を追記します。
+ログイン失敗の際にメッセージを表示するには、`app/views/layouts/application.erb` に以下を追記します。
 
 ```erb
 <% if flash[:alert] %>
