@@ -12,7 +12,7 @@ published: true
 
 最低限のモデルの作成が終わっている状態です。
 
-<https://zenn.dev/asterisk9101/articles/rails8-1>
+<https://zenn.dev/asterisk9101/articles/ruby_on_rails8-1>
 
 ## Active Storage のインストール
 
