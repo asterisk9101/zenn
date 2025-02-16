@@ -184,4 +184,4 @@ has_many :documents, dependent: :destroy
 
 次
 
-<https://zenn.dev/asterisk9101/articles/rails8-2>
+<https://zenn.dev/asterisk9101/articles/ruby_on_rails8-2>

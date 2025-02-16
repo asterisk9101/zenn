@@ -203,4 +203,4 @@ Document に複数のファイルを添付できることを確認します。
 
 次（予定）
 
-<https://zenn.dev/asterisk9101/articles/rails8-3>
+<https://zenn.dev/asterisk9101/articles/ruby_on_rails8-3>
