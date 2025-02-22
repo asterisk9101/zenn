@@ -87,7 +87,11 @@ mkdir db/seeds/
 touch db/seeds/development.rb
 ```
 
-`db/seeds/development.rb` に追記します。
+環境別ファイルに追記します。
+
+```bash
+vi db/seeds/development.rb
+```
 
 ```ruby
 10.times do |index|
@@ -108,7 +112,11 @@ end
 end
 ```
 
-個別の seed ファイルを読み込むために `db/seeds.rb` に追記します。
+シードファイルに個別の seed ファイルを読み込むための処理を追記します。
+
+```bash
+vi db/seeds.rb
+```
 
 ```ruby
 seed_file = Rails.root.join('db', 'seeds', "#{Rails.env}.rb")
@@ -125,9 +133,13 @@ bundle exec rails db:seed
 
 ## ホームページから部署の一覧を参照できるようにする
 
-開発中は無くても良いのですが、導線がある方がイメージしやすいので `app/view/home/index.html.erb` に追記します。
+ホームページに、各モデルの一覧へのリンクを追記します。
 
 ```bash
+vi app/views/home/index.html.erb
+```
+
+```erb
 <p>
   <%= link_to "Sections", sections_path %>
 </p>
@@ -144,9 +156,13 @@ bundle exec rails db:seed
 
 scaffold で自動的に作成されたモデルを調整します。
 
-`app/views/section.rb` に追記します。
+モデルに追記します。
 
 ```bash
+vi app/models/section.rb
+```
+
+```ruby
 # @section.documents で所属しているドキュメントのリストを取得できるようにします
 # 部署を削除したらドキュメントも削除されるようにします
 has_many :documents, dependent: :destroy
@@ -154,13 +170,21 @@ has_many :documents, dependent: :destroy
 
 ## 部署の文書を一覧できるようにする
 
-`app/controller/sections_controller.rb` の `show` メソッドに追記します。
+コントローラの `show` メソッドに追記します。
+
+```bash
+vi app/controllers/sections_controller.rb
+```
 
 ```ruby
 @documents = @section.documents
 ```
 
-`app/views/sections/show.html.erb` に追記します。
+ビューに追記します。
+
+```bash
+vi app/views/sections/show.html.erb
+```
 
 ```erb
 <hr>
@@ -175,7 +199,11 @@ has_many :documents, dependent: :destroy
 
 また、文書の画面から戻るリンクは、文書の一覧ではなく、部署の一覧に戻る動作に変更しておきます。
 
-```diff
+```bash
+vi app/views/documents/show.html.erb
+```
+
+```diff erb
 - <%= link_to "Back to documents", documents_path %>
 + <%= link_to "Back to Section", section_path(@document.section_id) %>
 ```
