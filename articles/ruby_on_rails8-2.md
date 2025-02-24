@@ -226,7 +226,7 @@ def authorized?
     allow = @blob.attachments.any? do |attachment|
         type = attachment.record_type
         id   = attachment.record_id
-        record = record_type.constantize.find(id)
+        record = type.constantize.find(id)
         record.allow?(current_user)
     end
 
