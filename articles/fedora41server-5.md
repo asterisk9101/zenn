@@ -63,7 +63,11 @@ before_action :authenticate_user!
 
 ログイン画面が表示されるようになりましたが、ユーザーが定義されていないためログインできません。
 
-`db/seed.rb` にユーザー登録用のコードを記載します。
+seed ファイルにユーザー登録用のコードを記載します。
+
+```bash
+vi db/seed.rb
+```
 
 ```ruby
 User.find_or_initialize_by(email: 'admin@example.com') do |user|
@@ -82,14 +86,32 @@ bundle exec rails db:seed
 
 `Home#index` と記載されたページが表示されれば認証成功です。
 
-## メッセージの表示
+## ログアウトとメッセージの表示
 
-ログイン失敗の際にメッセージを表示するには、`app/views/layouts/application.erb` に以下を追記します。
+ログアウトリンクやログイン失敗の際にメッセージを表示するには、レイアウトに以下を追記します。
+
+```bash
+vi app/views/layouts/application.html.erb
+```
 
 ```erb
 <% if flash[:alert] %>
   <p style="color: red"><%= flash[:alert] %></p>
 <% end %>
+<header>
+  <% if user_signed_in? %>
+    <li>
+      <%= link_to "logout", destroy_user_session_path, method: :delete %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to "signup", new_user_registration_path %>
+    </li>
+    <li>
+      <%= link_to "login", new_user_session_path %>
+    </li>
+  <% end %>
+</header>
 ```
 
 以上
