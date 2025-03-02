@@ -113,6 +113,6 @@ vi app/controllers/activities_controller.rb
 vi app/controllers/activities_controller.rb
 ```
 
-次（予定）
+次
 
 <https://zenn.dev/asterisk9101/articles/ruby_on_rails8-5>

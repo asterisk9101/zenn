@@ -147,4 +147,6 @@ bin/dev
 
 `http://{WebサーバのIPアドレス}:3000/` にアクセスできれば開発の準備は完了です。
 
-以上
+次
+
+<https://zenn.dev/asterisk9101/articles/fedora41server-5>

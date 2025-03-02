@@ -114,4 +114,6 @@ vi app/views/layouts/application.html.erb
 </header>
 ```
 
-以上
+次
+
+<https://zenn.dev/asterisk9101/articles/ruby_on_rails8-1>
