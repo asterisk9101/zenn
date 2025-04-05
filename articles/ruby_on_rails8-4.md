@@ -23,8 +23,7 @@ bundle exec rails g scaffold Activity \
     document:references \
     user_department:string \
     user_title:string \
-    user_name:string \
-    type:string
+    user_name:string
 
 bundle exec rails db:migrate
 ```
