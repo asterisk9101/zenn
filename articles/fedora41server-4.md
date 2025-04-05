@@ -139,6 +139,14 @@ sed -i.bak -E \
 diff config/database.yml{,.bak}
 ```
 
+## タイムゾーンの設定
+
+```bash
+line='    config.time_zone = "Tokyo"'
+sed -i '/class Application/a\'"$line" config/application.rb
+cat config/application.rb
+```
+
 開発サーバを起動します。
 
 ```bash
