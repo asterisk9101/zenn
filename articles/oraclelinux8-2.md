@@ -27,6 +27,23 @@ Grid Infrastructure のインストールの前提として必要な設定を一
 dnf install -y oracle-database-preinstall-21c
 ```
 
+`rpm -ql oracle-database-preinstall-21c-1.0-1.el8.x86_64` すると、以下のようになります。
+
+```console
+/etc/rc.d/init.d/oracle-database-preinstall-21c-firstboot
+/etc/security/limits.d/oracle-database-preinstall-21c.conf
+/etc/sysconfig/oracle-database-preinstall-21c
+/etc/sysconfig/oracle-database-preinstall-21c/oracle-database-preinstall-21c-verify
+/etc/sysconfig/oracle-database-preinstall-21c/oracle-database-preinstall-21c.param
+/usr/bin/oracle-database-preinstall-21c-verify
+/usr/share/licenses/oracle-database-preinstall-21c
+/usr/share/licenses/oracle-database-preinstall-21c/LICENSE
+/var/log/oracle-database-preinstall-21c
+/var/log/oracle-database-preinstall-21c/results
+```
+
+`oracle-database-preinstall-21c-verify` と `oracle-database-preinstall-21c.param` が初期化スクリプトのようです。
+
 ## 必要なグループとユーザーを作成
 
 ```bash
@@ -36,7 +53,7 @@ groupadd -g 54329 asmadmin
 useradd -g oinstall -G asmadmin,asmdba,asmoper,racdba grid
 ```
 
-oracle は asm 系のグループが足りないので追加します。
+preinstall rpm で作成された oracle ユーザーは asm 系のグループが足りないので追加します。
 
 ```bash
 usermod -aG asmdba oracle
@@ -54,7 +71,7 @@ passwd root
 
 ## リソース制限の変更
 
-デフォルトでは不十分だそうです。
+preinstall rpm で作成された設定ファイルでは不十分だそうです。
 
 ```bash
 cat << EOF >> /etc/security/limits.d/oracle-database-preinstall-21c.conf
@@ -141,7 +158,7 @@ export DISPLAY=:0
 
 ## Prerequisite Check の対応
 
-自分の環境ではスワップの不足とライブラリの不足が指摘されたので追加します。
+自分の環境ではスワップの不足が指摘されたので追加します。
 
 ```bash
 # 事前確認
