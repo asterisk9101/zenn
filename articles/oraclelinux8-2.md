@@ -161,39 +161,39 @@ export DISPLAY=:0
 
 スタンドアロンでインストールします。
 
-![1](images/oraclelinux8-2/1.png)
+![1](images/oraclelinux8-2/001.png)
 
 ASM に追加するディスクを選択します。
 
-![3](images/oraclelinux8-2/3.png)
+![3](images/oraclelinux8-2/003.png)
 
 ASM のパスワードを入力します。
 
-![4](images/oraclelinux8-2/4.png)
+![4](images/oraclelinux8-2/004.png)
 
 Enterprise Manager Cloud Control は使わないのでそのまま次へ。
 
-![5](images/oraclelinux8-2/5.png)
+![5](images/oraclelinux8-2/005.png)
 
 OSのグループにASMの権限を割り当てます。
 
-![6](images/oraclelinux8-2/6.png)
+![6](images/oraclelinux8-2/006.png)
 
 インストールパスを選択します。
 
-![7](images/oraclelinux8-2/7.png)
+![7](images/oraclelinux8-2/007.png)
 
 インベントリのパスを選択します。
 
-![8](images/oraclelinux8-2/8.png)
+![8](images/oraclelinux8-2/008.png)
 
 root.sh を実行するためのパスワードを入力します。
 
-![9](images/oraclelinux8-2/9.png)
+![9](images/oraclelinux8-2/009.png)
 
 要件のチェックが実施されます。
 
-![10](images/oraclelinux8-2/10.png)
+![10](images/oraclelinux8-2/010.png)
 
 自分の環境ではスワップの不足が指摘されたので追加します。
 
@@ -224,15 +224,15 @@ Check Again して Warning を消してから次へ。
 
 確認画面で Install をクリックしてインストールを開始します。
 
-![11](images/oraclelinux8-2/11.png)
+![11](images/oraclelinux8-2/011.png)
 
 インストール中に警告が出ますが次へ。
 
-![12](images/oraclelinux8-2/12.png)
+![12](images/oraclelinux8-2/012.png)
 
 完了しました。
 
-![13](images/oraclelinux8-2/13.png)
+![13](images/oraclelinux8-2/013.png)
 
 ## .bash_profile の設定
 
