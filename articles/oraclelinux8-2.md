@@ -154,9 +154,46 @@ export LANG=C
 
 # X11で画面を表示するために DISPLAY変数をエクスポートします。
 export DISPLAY=:0
+
+# gridSetup.sh を実行します。
+./gridSetup.sh
 ```
 
-## Prerequisite Check の対応
+スタンドアロンでインストールします。
+
+![1](images/oraclelinux8-2/1.png)
+
+ASM に追加するディスクを選択します。
+
+![3](images/oraclelinux8-2/3.png)
+
+ASM のパスワードを入力します。
+
+![4](images/oraclelinux8-2/4.png)
+
+Enterprise Manager Cloud Control は使わないのでそのまま次へ。
+
+![5](images/oraclelinux8-2/5.png)
+
+OSのグループにASMの権限を割り当てます。
+
+![6](images/oraclelinux8-2/6.png)
+
+インストールパスを選択します。
+
+![7](images/oraclelinux8-2/7.png)
+
+インベントリのパスを選択します。
+
+![8](images/oraclelinux8-2/8.png)
+
+root.sh を実行するためのパスワードを入力します。
+
+![9](images/oraclelinux8-2/9.png)
+
+要件のチェックが実施されます。
+
+![10](images/oraclelinux8-2/10.png)
 
 自分の環境ではスワップの不足が指摘されたので追加します。
 
@@ -175,6 +212,27 @@ swapon /swapfile
 # 事後確認
 free -h
 ```
+
+swap を永続化します。
+
+```config
+# /etc/fstab に追記
+/swapfile swap swap defaults 0 0
+```
+
+Check Again して Warning を消してから次へ。
+
+確認画面で Install をクリックしてインストールを開始します。
+
+![11](images/oraclelinux8-2/11.png)
+
+インストール中に警告が出ますが次へ。
+
+![12](images/oraclelinux8-2/12.png)
+
+完了しました。
+
+![13](images/oraclelinux8-2/13.png)
 
 ## .bash_profile の設定
 
@@ -253,3 +311,7 @@ asmcmd lsdg
 # DATA ディスクグループに含まれるディスクの確認
 asmcmd lsdsk -G DATA
 ```
+
+## 次
+
+<https://zenn.dev/asterisk9101/articles/oraclelinux8-3>

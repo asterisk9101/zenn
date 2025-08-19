@@ -112,3 +112,7 @@ reboot
 ```bash
 echo $(hostname -I) $(hostname) $(hostname -s) >> /etc/hosts
 ```
+
+## 次
+
+<https://zenn.dev/asterisk9101/articles/oraclelinux8-2>
