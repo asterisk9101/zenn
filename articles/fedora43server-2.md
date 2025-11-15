@@ -18,7 +18,7 @@ Free IPA サーバのヘビーユーザーではないので不備はあるか�
 
 ## 構成
 
-以下のの2台構成です。
+以下の2台構成です。
 
 - 24-fedora40.localdomain.intra
 - 28-fedora40.localdomain.intra
@@ -97,7 +97,7 @@ firewall-cmd --reload
 ipa-replica-install --setup-ca --setup-dns --no-dnssec-validation --forwarder=192.168.1.1 -p admin -w $PW -U
 ```
 
-## First master に指定
+## first master に指定
 
 `28-fedora43.localdomain.intra` で完全な CA の役割を引き継ぎます。
 
@@ -110,7 +110,7 @@ ipa-csreplica-manage set-renewal-master
 ipa-crlgen-manage enable
 ```
 
-あとは、First Master だったサーバの降格とクリーンインストールを実施して、必要に応じて First Master の役割を戻して完了です。
+あとは、`first master` だったサーバの降格とクリーンインストールを実施して、必要に応じて `first master` の役割を戻して完了です。
 
 ## 参考
 
