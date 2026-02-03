@@ -171,5 +171,3 @@ setsebool -P httpd_enable_homedirs on
 ```
 
 `http://xxx.xxx.xxx.xxx/~testuser/` にアクセスして、ファイルが一覧で参照できればOK
-
-動作確認は後日やります。
