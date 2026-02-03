@@ -49,6 +49,9 @@ dnf -y install samba
         # Install samba-usershares package for support
         include = /etc/samba/usershares.conf
 
+        # SMB 3.0 で暗号化を必須とする
+        smb encrypt = required
+
 [homes]
         comment = Home Directories
         valid users = %S, %D%w%S
@@ -56,8 +59,6 @@ dnf -y install samba
         read only = No
         inherit acls = Yes
         
-        # SMB 3.0 で暗号化を必須とする
-        smb encrypt = required
 
 #[printers]
 #       comment = All Printers
@@ -87,7 +88,7 @@ firewall-cmd --runtime-to-permanent
 
 ```bash
 # ログインシェルを無効化する
-useradd -s nologin testuser
+useradd -s /bin/nologin testuser
 
 # SAMBA 用のパスワードを設定する
 smbpasswd -a testuser
@@ -97,6 +98,12 @@ smbpasswd -a testuser
 
 ```bash
 systemctl enable --now smb
+```
+
+SELinux の許可
+
+```bash
+setsebool -P samba_enable_home_dirs on
 ```
 
 ホームディレクトリへアクセスできるようになった。
@@ -139,6 +146,9 @@ dnf -y install httpd
 
 ```bash
 chmod 711 /home/testuser
+mkdir /home/testuser/public_html
+chown testuser:testuser /home/testuser/public_html
+echo '<body>ABC</body>' > /home/testuser/public_html/index.html
 ```
 
 サービスを起動する。
@@ -152,6 +162,12 @@ systemctl enable --now httpd
 ```bash
 firewall-cmd --add-service=http
 firewall-cmd --runtime-to-permanent
+```
+
+SELinux を許可する
+
+```bash
+setsebool -P httpd_enable_homedirs on
 ```
 
 `http://xxx.xxx.xxx.xxx/~testuser/` にアクセスして、ファイルが一覧で参照できればOK
