@@ -68,7 +68,7 @@ bundle exec rails g scaffold Section \
 
 # 文書
 bundle exec rails g scaffold Document \
-  name:string \
+  title:string \
   status:string \
   due_date:datetime \
   section:references
