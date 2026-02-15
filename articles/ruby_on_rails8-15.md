@@ -169,8 +169,8 @@ export default class extends Controller {
       const lang = pre.dataset.language
       if (lang === undefined) { return } // 未定義の場合は何もしない
 
-      // ActionText は改行も HTML タグとして保存してしまうので、テキストノードだけ抽出して
-      // 改行で結合する
+      // ActionText は改行を HTML タグとして保存してしまうので
+      // pre 配下のテキストノードだけ抽出して改行で結合する
       const preChildNodes = Array.from(pre.childNodes);
       const textNodes = preChildNodes.filter(node => node.nodeType === Node.TEXT_NODE);
       const textContent = textNodes.map(node => node.nodeValue).join("\n");
@@ -188,6 +188,8 @@ export default class extends Controller {
       pre.classList.add("line-numbers")
       pre.appendChild(code);
     });
+
+    // Prism.js によるハイライトの処理
     if (window.Prism) { Prism.highlightAll() }
   }
 }
