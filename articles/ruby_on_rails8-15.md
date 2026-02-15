@@ -146,18 +146,7 @@ import "lexxy"
 
 ---
 
-まず `prism.js` と `prism.css` は、別途ダウンロードしてプロジェクトの `public/` に配置します。
-
-レイアウトビューからそれらを参照します。
-
-```erb:app/views/layouts/application.html.erb
-<head>
-  <link href="/prism.css" rel="stylesheet">
-  <scritp src="/prism.js"></script>
-</head>
-```
-
-それから `stimulus` のコントローラを作ります。`connect` は作成したコントローラが DOM 上の要素に接続されたときに呼ばれるメソッドらしいです。
+まず `stimulus` のコントローラを作ります。`connect` は作成したコントローラが DOM 上の要素に接続されたときに呼ばれるメソッドらしいです。
 
 ```javascript:app/javascript/controllers/prism_controller.js
 import { Controller } from "@hotwired/stimulus"
