@@ -56,8 +56,10 @@ end
 `Post` のビューを修正します。
 
 ```ruby:app/views/posts/_form.html.erb
-<%= form.label :content, style: "display: block" %>
-<%= form.rich_text_area :content%>
+<div>
+  <%= form.label :content, style: "display: block" %>
+  <%= form.rich_text_area :content %>
+</div>
 ```
 
 ```ruby:app/views/posts/_post.html.erb
@@ -129,70 +131,24 @@ import "lexxy"
 
 ```erb:app/views/layouts/action_text/contents/_content.html.erb
 <!-- <div class="trix-content"> ->
-<div class="lexxy-content">
+<div class="lexxy-content" data-controller="syntax-highlight">
 ```
 
-`bin/dev` して `trix` が `lexxy` に置き換わったことを確認します。
+コードハイライトするために stimulus につなぎます。
+公式ドキュメントは `highlightCode` になっていますが、正しくは `highlightAll` だそうです。
 
-## コードハイライトが動かない
-
-`lexxy` は2026年現在 early beta のせいか、エディタ上ではハイライトされるのに、ビューに戻るとコードハイライトが機能してないような気がします。
-
-調べてみると `ActionText` で保存されたデータは、HTMLタグも含めて保存されており、コード部分は `<pre data-language="****">`、その中は改行が `<br>` などになっています。
-
-一方で、コーディングエージェントに調べによると `lexxy` では、`prism.js` が使われているとのことでした。`prism.js` を素直に使う場合は、ハイライトしたい部分を `<code class="language-****">` に入れてやる必要があるらしいです。
-
-そこで、`<pre>` タグが描画された後に、`javascript` でコード部分を抜き出して `<code>` タグを差し込んでみます。
-
----
-
-まず `stimulus` のコントローラを作ります。`connect` は作成したコントローラが DOM 上の要素に接続されたときに呼ばれるメソッドらしいです。
-
-```javascript:app/javascript/controllers/prism_controller.js
+```javascript:app/javascript/syntax_highlight_controller.js
 import { Controller } from "@hotwired/stimulus"
+import { highlightAll } from "lexxy"
 
 export default class extends Controller {
   connect() {
-    Array.from(document.getElementsByTagName("pre")).forEach(function(pre) {
-      // 言語判定
-      const lang = pre.dataset.language
-      if (lang === undefined) { return } // 未定義の場合は何もしない
-
-      // ActionText は改行を HTML タグとして保存してしまうので
-      // pre 配下のテキストノードだけ抽出して改行で結合する
-      const preChildNodes = Array.from(pre.childNodes);
-      const textNodes = preChildNodes.filter(node => node.nodeType === Node.TEXT_NODE);
-      const textContent = textNodes.map(node => node.nodeValue).join("\n");
-
-      // code 要素を作る
-      const code = document.createElement("code");
-      code.textContent = textContent
-      switch(lang) {
-        case "js":  code.classList.add("language-javascript"); break;
-        default:    code.classList.add("language-" + lang); break;
-      }
-
-      // pre をクリアしてから code を載せる
-      pre.textContent = ""; // clear
-      pre.classList.add("line-numbers")
-      pre.appendChild(code);
-    });
-
-    // Prism.js によるハイライトの処理
-    if (window.Prism) { Prism.highlightAll() }
+    highlightAll()
   }
 }
 ```
 
-ビューの方でコントローラを接続します。
-
-```erb:app/views/posts/_post.html.erb
-<div data-controller="prism" ...>
-  ...
-</div>
-```
-
-理解が及んでない部分がありますが以上です。
+`bin/dev` して `trix` が `lexxy` に置き換わったことを確認します。
 
 ## 参考
 
