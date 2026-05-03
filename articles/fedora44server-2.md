@@ -1,5 +1,5 @@
 ---
-title: "Fedora43 サーバを FreeIPA クライアントにするときのメモ"
+title: "Fedora44 サーバを FreeIPA クライアントにするときのメモ"
 emoji: "👒"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Linux, Fedora, memo]
