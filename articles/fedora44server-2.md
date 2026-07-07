@@ -49,6 +49,15 @@ kinit admin
 ipa host-del <FQDN> --updatedns
 ```
 
+## DNSのAレコードの登録
+
+DNS の A レコードが自動で登録されなくなったらしく、手動で登録します。
+
+```bash
+kinit admin
+ipa dnsrecord-add $(hostname -d) $(hostname -s) --a-rec $(hostname -I)
+```
+
 ## DNSの設定
 
 FreeIPA サーバが複数ある場合は DNS の設定を更新します。
