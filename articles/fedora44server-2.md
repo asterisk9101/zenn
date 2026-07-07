@@ -38,15 +38,6 @@ ID=admin
 ipa-client-install --server=$IPA_SERVER_FQDN --domain $DOMAIN -p $ID -w $PW --mkhomedir -U
 ```
 
-## DNSのAレコードの登録
-
-DNS の A レコードが自動で登録されなくなったらしく、手動で登録します。
-
-```bash
-kinit admin
-ipa dnsrecord-add $(hostname -d) $(hostname -s) --a-rec $(hostname -I)
-```
-
 ### FreeIPA ドメインへの参加に失敗するとき
 
 検証サーバは潰して立ててを繰り返すものなので、潰したサーバの情報がドメインに残っているのかも知れません。
