@@ -64,6 +64,8 @@ live 環境が表示されるので `Install Fedora Linux...` をクリック。
 
 ![12](/images/fedora44workstation-1/012.jpg)
 
+## 再起動
+
 再起動するとセットアップ画面が表示されるので、「セットアップを開始」をクリックします。
 
 ![13](/images/fedora44workstation-1/013.jpg)
@@ -90,6 +92,8 @@ live 環境が表示されるので `Install Fedora Linux...` をクリック。
 
 完了画面が表示されるので、「Fedora Linux を使い始める」をクリックします。
 
+## セットアップ完了後
+
 ![19](/images/fedora44workstation-1/019.jpg)
 
 ツアーが表示されるので、「スキップ」をクリックします。
@@ -106,7 +110,7 @@ live 環境が表示されるので `Install Fedora Linux...` をクリック。
 
 `sudo su -` できるので `wheel` グループであることが分かります。
 
-![24](/images/fedora44workstation-1/023.jpg)
+![24](/images/fedora44workstation-1/024.jpg)
 
 ディスクの使用量を確認。
 
