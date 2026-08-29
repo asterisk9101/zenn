@@ -92,9 +92,9 @@ live 環境が表示されるので `Install Fedora Linux...` をクリック。
 
 完了画面が表示されるので、「Fedora Linux を使い始める」をクリックします。
 
-## セットアップ完了後
-
 ![19](/images/fedora44workstation-1/019.jpg)
+
+## セットアップ完了後
 
 ツアーが表示されるので、「スキップ」をクリックします。
 
