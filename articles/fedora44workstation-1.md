@@ -124,7 +124,7 @@ CPU コア数を確認。
 
 ![27](/images/fedora44workstation-1/027.jpg)
 
-`dnf -y update` して再起動を行います（再起動はシステムメニューからしかできませんでした。`reboot` は効かないらしく）
+`dnf -y update` して再起動を行います。
 
 ![28](/images/fedora44workstation-1/028.jpg)
 
@@ -133,3 +133,7 @@ CPU コア数を確認。
 この時点で一度バックアップを作成しておきます。
 
 長かったので一旦以上です。
+
+## 次
+
+<https://zenn.dev/asterisk9101/articles/fedora44workstation-2>
